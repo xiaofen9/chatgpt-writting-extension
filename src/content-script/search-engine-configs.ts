@@ -6,6 +6,11 @@ export interface SearchEngine {
 }
 
 export const config: Record<string, SearchEngine> = {
+  overleaf: {
+    inputQuery: [],
+    sidebarContainerQuery: ['.outline-pane'],
+    appendContainerQuery: [],
+  },
   google: {
     inputQuery: ["input[name='q']"],
     sidebarContainerQuery: ['#rhs'],

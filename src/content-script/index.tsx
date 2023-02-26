@@ -1,6 +1,6 @@
 import { render } from 'preact'
 import '../base.css'
-import { getUserConfig, Language, Theme } from '../config'
+import { getUserConfig, Theme } from '../config'
 import { detectSystemColorScheme } from '../utils'
 import ChatGPTContainer from './ChatGPTContainer'
 import { config, SearchEngine } from './search-engine-configs'
@@ -18,11 +18,8 @@ async function mount(question: string, siteConfig: SearchEngine) {
   } else {
     theme = userConfig.theme
   }
-  if (theme === Theme.Dark) {
-    container.classList.add('gpt-dark')
-  } else {
-    container.classList.add('gpt-light')
-  }
+
+  container.classList.add('gpt-dark')
 
   const siderbarContainer = getPossibleElementByQuerySelector(siteConfig.sidebarContainerQuery)
   if (siderbarContainer) {
@@ -45,21 +42,43 @@ const siteRegex = new RegExp(Object.keys(config).join('|'))
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = config[siteName]
 
-async function run() {
-  const searchInput = getPossibleElementByQuerySelector<HTMLInputElement>(siteConfig.inputQuery)
-  if (searchInput && searchInput.value) {
-    console.debug('Mount ChatGPT on', siteName)
-    const userConfig = await getUserConfig()
-    const searchValueWithLanguageOption =
-      userConfig.language === Language.Auto
-        ? searchInput.value
-        : `${searchInput.value}(in ${userConfig.language})`
-    mount(searchValueWithLanguageOption, siteConfig)
+const explainBtn = document.createElement('button')
+explainBtn.textContent = 'Expalin'
+explainBtn.addEventListener('click', () => {
+  const selectedText = window.getSelection().toString().trim()
+  if (selectedText !== '') {
+    const question = 'explain the following content \n' + selectedText
+    mount(question, siteConfig)
   }
-}
+})
 
-run()
+const rewriteBtn = document.createElement('button')
+rewriteBtn.textContent = 'Rewrite'
+rewriteBtn.addEventListener('click', () => {
+  const selectedText = window.getSelection().toString().trim()
+  if (selectedText !== '') {
+    const question = 'rewrite the following content for clearity \n' + selectedText
+    mount(question, siteConfig)
+  }
+})
 
-if (siteConfig.watchRouteChange) {
-  siteConfig.watchRouteChange(run)
-}
+// Position the buttons
+const buttonStyle = `
+  position: fixed;
+  bottom: 20px;
+  z-index: 9999;
+`
+
+explainBtn.style.cssText = `
+  ${buttonStyle}
+  left: 70px;
+`
+
+rewriteBtn.style.cssText = `
+  ${buttonStyle}
+  left: 10px;
+`
+
+// Add the buttons to the page
+document.body.appendChild(explainBtn)
+document.body.appendChild(rewriteBtn)

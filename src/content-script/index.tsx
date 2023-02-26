@@ -71,7 +71,7 @@ const buttonStyle = `
 
 explainBtn.style.cssText = `
   ${buttonStyle}
-  left: 70px;
+  left: 80px;
 `
 
 rewriteBtn.style.cssText = `

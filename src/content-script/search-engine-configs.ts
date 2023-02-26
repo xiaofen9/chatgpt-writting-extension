@@ -11,6 +11,11 @@ export const config: Record<string, SearchEngine> = {
     sidebarContainerQuery: ['.outline-pane'],
     appendContainerQuery: [],
   },
+  hackmd: {
+    inputQuery: [],
+    sidebarContainerQuery: ['#hackmd-app'],
+    appendContainerQuery: [],
+  },
   google: {
     inputQuery: ["input[name='q']"],
     sidebarContainerQuery: ['#rhs'],

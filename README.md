@@ -6,7 +6,11 @@ This repo is based on https://github.com/wong2/chatgpt-google-extension
 Overleaf, HackMd, Google, Bing
 
 ## Installation
-Download the [extension](https://github.com/xiaofen9/chatgpt-writting-extension/blob/main/gptwritter.crx) and drag it into chrome.
+1. Download the [build.zip]([https://github.com/xiaofen9/chatgpt-writting-extension/blob/main/gptwritter.crx](https://github.com/xiaofen9/chatgpt-writting-extension/blob/main/build.zip)) and unzip it
+2. Open `chrome://extensions` in your chrome, and click `load unpacked`
+3. Load `build/chromium/` or `build/firefox/` directory to your browser
+
+
 Or build from source by yourself.
 
 1. Clone the repo

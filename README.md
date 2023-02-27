@@ -3,9 +3,19 @@ This repo is based on https://github.com/wong2/chatgpt-google-extension
 
 ## Supported Platforms 
 
-Overleaf, Google, Bing
+Overleaf, HackMd, Google, Bing
 
-## Usage
+## Installation
+Download the [extension](https://github.com/xiaofen9/chatgpt-writting-extension/blob/main/gptwritter.crx) and drag it into chrome.
+Or build from source by yourself.
+
+1. Clone the repo
+2. Install dependencies with `npm`
+3. `npm run build`
+4. Load `build/chromium/` or `build/firefox/` directory to your browser
+
+
+## How to use
 Intuitive workflow:
 - First, you select the text
 - Second, you click btns to let chatgpt to rewrite or explain your text
@@ -24,9 +34,3 @@ Intuitive workflow:
 - Switch languages
 
 
-## Build from source
-
-1. Clone the repo
-2. Install dependencies with `npm`
-3. `npm run build`
-4. Load `build/chromium/` or `build/firefox/` directory to your browser

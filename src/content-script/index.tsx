@@ -43,11 +43,11 @@ const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = config[siteName]
 
 const explainBtn = document.createElement('button')
-explainBtn.textContent = 'Expalin'
+explainBtn.textContent = 'Concise'
 explainBtn.addEventListener('click', () => {
   const selectedText = window.getSelection().toString().trim()
   if (selectedText !== '') {
-    const question = 'explain the following content \n' + selectedText
+    const question = 'concise the following content \n' + selectedText
     mount(question, siteConfig)
   }
 })

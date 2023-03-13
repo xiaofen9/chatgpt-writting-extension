@@ -31,6 +31,11 @@ async function mount(question: string, siteConfig: SearchEngine) {
       appendContainer.appendChild(container)
     }
   }
+  containerQueue.push(container)
+  if (containerQueue.length > 2) {
+    const containtToRemove = containerQueue.shift()
+    containtToRemove.remove()
+  }
 
   render(
     <ChatGPTContainer question={question} triggerMode={userConfig.triggerMode || 'always'} />,
@@ -41,6 +46,7 @@ async function mount(question: string, siteConfig: SearchEngine) {
 const siteRegex = new RegExp(Object.keys(config).join('|'))
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = config[siteName]
+const containerQueue = []
 
 const explainBtn = document.createElement('button')
 explainBtn.textContent = 'Concise'

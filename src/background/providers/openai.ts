@@ -1,4 +1,4 @@
-import { fetchSSE } from '../fetch-sse'
+import { fetchDirect } from '../fetch-sse'
 import { GenerateAnswerParams, Provider } from '../types'
 
 export class OpenAIProvider implements Provider {
@@ -7,16 +7,9 @@ export class OpenAIProvider implements Provider {
     this.model = model
   }
 
-  private buildPrompt(prompt: string): string {
-    if (this.model.startsWith('text-chat-davinci')) {
-      return `Respond conversationally.<|im_end|>\n\nUser: ${prompt}<|im_sep|>\nChatGPT:`
-    }
-    return prompt
-  }
-
   async generateAnswer(params: GenerateAnswerParams) {
     let result = ''
-    await fetchSSE('https://api.openai.com/v1/completions', {
+    await fetchDirect('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       signal: params.signal,
       headers: {
@@ -24,24 +17,16 @@ export class OpenAIProvider implements Provider {
         Authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify({
-        model: this.model,
-        prompt: this.buildPrompt(params.prompt),
-        stream: true,
-        max_tokens: 2048,
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: params.prompt }],
+        temperature: 0.7,
       }),
       onMessage(message) {
         console.debug('sse message', message)
-        if (message === '[DONE]') {
-          params.onEvent({ type: 'done' })
-          return
-        }
         let data
         try {
           data = JSON.parse(message)
-          const text = data.choices[0].text
-          if (text === '<|im_end|>' || text === '<|im_sep|>') {
-            return
-          }
+          const text = data.choices[0].message.content
           result += text
           params.onEvent({
             type: 'answer',
@@ -55,6 +40,9 @@ export class OpenAIProvider implements Provider {
           console.error(err)
           return
         }
+
+        params.onEvent({ type: 'done' })
+        return
       },
     })
     return {}

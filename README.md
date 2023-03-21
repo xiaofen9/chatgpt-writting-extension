@@ -35,7 +35,7 @@ Intuitive workflow:
 ![image](https://user-images.githubusercontent.com/20917869/221438513-3ac5bfb4-3d73-4fae-97a5-1c14622d96af.png)
 
 ## Features
-- Supoorts ``rewrite for clarity'' and ``concise'' feature
+- Supoorts `rewrite for clarity` and `concise` feature
 - Supports the official OpenAI API
 - Supports ChatGPT Plus
 - Markdown rendering

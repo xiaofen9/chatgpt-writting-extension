@@ -53,7 +53,9 @@ explainBtn.textContent = 'Concise'
 explainBtn.addEventListener('click', () => {
   const selectedText = window.getSelection().toString().trim()
   if (selectedText !== '') {
-    const question = 'concise the following content \n' + selectedText
+    const question =
+      'Please review the following paragraph(s) and revise them to be more concise while retaining the essential meaning and important concepts. Please ensure that the revised content is clear, accurate \n' +
+      selectedText
     mount(question, siteConfig)
   }
 })
@@ -63,7 +65,9 @@ rewriteBtn.textContent = 'Rewrite'
 rewriteBtn.addEventListener('click', () => {
   const selectedText = window.getSelection().toString().trim()
   if (selectedText !== '') {
-    const question = 'rewrite the following content for clearity \n' + selectedText
+    const question =
+      'Please review the following paragraph(s) and revise them to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning.\n' +
+      selectedText
     mount(question, siteConfig)
   }
 })

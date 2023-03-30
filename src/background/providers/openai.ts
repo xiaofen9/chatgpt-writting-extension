@@ -17,7 +17,7 @@ export class OpenAIProvider implements Provider {
         Authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4-0314',
         messages: [{ role: 'user', content: params.prompt }],
         temperature: 0.7,
       }),

@@ -54,7 +54,7 @@ explainBtn.addEventListener('click', () => {
   const selectedText = window.getSelection().toString().trim()
   if (selectedText !== '') {
     const question =
-      'Please review the following paragraph(s) and revise them to be more concise while retaining the essential meaning and important concepts. Please ensure that the revised content is clear, accurate \n' +
+      'Please review the following paragraph(s) and revise them to be more concise while retaining the essential meaning and important concepts. Please ensure that the revised content is clear, accurate ---------WRITTING-GPT----------' +
       selectedText
     mount(question, siteConfig)
   }
@@ -66,7 +66,7 @@ rewriteBtn.addEventListener('click', () => {
   const selectedText = window.getSelection().toString().trim()
   if (selectedText !== '') {
     const question =
-      'Please review the following paragraph(s) and revise them to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning.\n' +
+      'Please review the following paragraph(s) and revise them to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning. ---------WRITTING-GPT----------' +
       selectedText
     mount(question, siteConfig)
   }

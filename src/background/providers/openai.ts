@@ -7,6 +7,15 @@ export class OpenAIProvider implements Provider {
     this.model = model
   }
 
+  private _generatePrompt(prompt: string): object[] {
+    const arrayPrompt = prompt.split('---------WRITTING-GPT----------')
+    const res = [
+      { role: 'system', content: arrayPrompt[0] },
+      { role: 'user', content: arrayPrompt[1] },
+    ]
+    return res
+  }
+
   async generateAnswer(params: GenerateAnswerParams) {
     let result = ''
     await fetchDirect('https://api.openai.com/v1/chat/completions', {
@@ -17,9 +26,9 @@ export class OpenAIProvider implements Provider {
         Authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4-0314',
-        messages: [{ role: 'user', content: params.prompt }],
-        temperature: 0.7,
+        model: 'gpt-4',
+        messages: this._generatePrompt(params.prompt),
+        temperature: 0.2,
       }),
       onMessage(message) {
         console.debug('sse message', message)

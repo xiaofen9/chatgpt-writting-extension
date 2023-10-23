@@ -66,7 +66,7 @@ rewriteBtn.addEventListener('click', () => {
   const selectedText = window.getSelection().toString().trim()
   if (selectedText !== '') {
     const question =
-      'Please review the following paragraph(s) and revise them to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning. ---------WRITTING-GPT----------' +
+      'Please rewrite the following paragraph(s) like a USENIX Security conference paper to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning. ---------WRITTING-GPT----------' +
       selectedText
     mount(question, siteConfig)
   }

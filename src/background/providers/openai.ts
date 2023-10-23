@@ -28,7 +28,7 @@ export class OpenAIProvider implements Provider {
       body: JSON.stringify({
         model: 'gpt-4',
         messages: this._generatePrompt(params.prompt),
-        temperature: 0.2,
+        temperature: 0.4,
       }),
       onMessage(message) {
         console.debug('sse message', message)

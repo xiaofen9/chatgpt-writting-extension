@@ -1,3 +1,4 @@
+import * as api_config from './api_config.json'
 import { getExtensionVersion } from './utils'
 
 const API_HOST = 'https://chatgpt4google.com'
@@ -20,13 +21,11 @@ export async function fetchPromotion(): Promise<PromotionResponse | null> {
   }).then((r) => r.json())
 }
 
+// get config from './api_config.json'
 export async function fetchExtensionConfigs(): Promise<{
   chatgpt_webapp_model_name: string
   openai_model_names: string[]
 }> {
-  return fetch(`${API_HOST}/api/config`, {
-    headers: {
-      'x-version': getExtensionVersion(),
-    },
-  }).then((r) => r.json())
+  // async so Promise
+  return Promise.resolve(api_config)
 }

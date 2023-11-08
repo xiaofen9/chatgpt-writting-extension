@@ -37,13 +37,26 @@ export enum Language {
   Portuguese = 'portuguese',
 }
 
+interface UserConfig {
+  triggerMode: TriggerMode
+  theme: Theme
+  language: Language
+  prompts: {
+    [key: string]: string
+  }
+}
+
 const userConfigWithDefaultValue = {
   triggerMode: TriggerMode.Always,
   theme: Theme.Auto,
   language: Language.Auto,
+  prompts: {
+    Rewrite:
+      'Please rewrite the following paragraph(s) like a USENIX Security conference paper to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning. ',
+    Concise:
+      'Please review the following paragraph(s) and revise them to be more concise while retaining the essential meaning and important concepts. Please ensure that the revised content is clear, accurate ',
+  },
 }
-
-export type UserConfig = typeof userConfigWithDefaultValue
 
 export async function getUserConfig(): Promise<UserConfig> {
   const result = await Browser.storage.local.get(Object.keys(userConfigWithDefaultValue))
@@ -53,6 +66,11 @@ export async function getUserConfig(): Promise<UserConfig> {
 export async function updateUserConfig(updates: Partial<UserConfig>) {
   console.debug('update configs', updates)
   return Browser.storage.local.set(updates)
+}
+
+export async function resetUserConfig(configKey: keyof UserConfig) {
+  console.debug('reset configs', configKey)
+  return updateUserConfig({ [configKey]: userConfigWithDefaultValue[configKey] })
 }
 
 export enum ProviderType {
@@ -72,6 +90,7 @@ export interface ProviderConfigs {
   }
 }
 
+// api key is in the local storage
 export async function getProviderConfigs(): Promise<ProviderConfigs> {
   const { provider = ProviderType.ChatGPT } = await Browser.storage.local.get('provider')
   const configKey = `provider:${ProviderType.GPT3}`

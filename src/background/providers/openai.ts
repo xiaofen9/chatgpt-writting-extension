@@ -18,6 +18,7 @@ export class OpenAIProvider implements Provider {
 
   async generateAnswer(params: GenerateAnswerParams) {
     let result = ''
+    // params.prompt = "you are an helpful assistant. ---------WRITTING-GPT---------- 树上 10 只鸟，打掉 1 只，还剩几只？"
     await fetchDirect('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       signal: params.signal,
@@ -26,7 +27,7 @@ export class OpenAIProvider implements Provider {
         Authorization: `Bearer ${this.token}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4',
+        model: this.model,
         messages: this._generatePrompt(params.prompt),
         temperature: 0.4,
       }),

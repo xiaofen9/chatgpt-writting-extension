@@ -47,48 +47,54 @@ const siteRegex = new RegExp(Object.keys(config).join('|'))
 const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = config[siteName]
 const containerQueue = []
-
-const explainBtn = document.createElement('button')
-explainBtn.textContent = 'Concise'
-explainBtn.addEventListener('click', () => {
-  const selectedText = window.getSelection().toString().trim()
-  if (selectedText !== '') {
-    const question =
-      'Please review the following paragraph(s) and revise them to be more concise while retaining the essential meaning and important concepts. Please ensure that the revised content is clear, accurate ---------WRITTING-GPT----------' +
-      selectedText
-    mount(question, siteConfig)
-  }
-})
-
-const rewriteBtn = document.createElement('button')
-rewriteBtn.textContent = 'Rewrite'
-rewriteBtn.addEventListener('click', () => {
-  const selectedText = window.getSelection().toString().trim()
-  if (selectedText !== '') {
-    const question =
-      'Please rewrite the following paragraph(s) like a USENIX Security conference paper to enhance clarity while retaining the terms and concepts defined by the author. Please ensure that the revised content accurately conveys the intended meaning. ---------WRITTING-GPT----------' +
-      selectedText
-    mount(question, siteConfig)
-  }
-})
-
-// Position the buttons
 const buttonStyle = `
   position: fixed;
   bottom: 20px;
   z-index: 9999;
 `
 
-explainBtn.style.cssText = `
-  ${buttonStyle}
-  left: 80px;
-`
+async function load_button(button_name: string, buttonPosition: number) {
+  const userConfig = await getUserConfig()
 
-rewriteBtn.style.cssText = `
-  ${buttonStyle}
-  left: 10px;
-`
+  const Btn = document.createElement('button')
 
-// Add the buttons to the page
-document.body.appendChild(explainBtn)
-document.body.appendChild(rewriteBtn)
+  Btn.textContent = button_name
+  Btn.addEventListener('click', () => {
+    // Removed userConfig parameter here
+    const selection = window.getSelection()
+    if (selection) {
+      const selectedText = selection.toString().trim()
+      if (selectedText !== '') {
+        const question =
+          userConfig.prompts[button_name] + ' ---------WRITTING-GPT---------- ' + selectedText
+        mount(question, siteConfig)
+      }
+    }
+  })
+
+  // Position the buttons
+  Btn.style.cssText = `
+    ${buttonStyle}
+    left: ${buttonPosition}px;
+  `
+
+  // Add the buttons to the page
+  document.body.appendChild(Btn)
+}
+
+// load all buttons
+async function load_buttons() {
+  const userConfig = await getUserConfig()
+  // add more 70 px to each button
+  let buttonPosition = 10
+  for (const button_name in userConfig.prompts) {
+    load_button(button_name, buttonPosition).catch((error) => {
+      console.error('Error occurred:', error)
+    })
+    buttonPosition += 70
+  }
+}
+
+load_buttons().catch((error) => {
+  console.error('Error occurred:', error)
+})

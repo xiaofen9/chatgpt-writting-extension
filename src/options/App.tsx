@@ -12,6 +12,7 @@ import {
 } from '../config'
 import logo from '../logo.png'
 import { detectSystemColorScheme, getExtensionVersion } from '../utils'
+import PromptSelect from './PromptSelect'
 import ProviderSelect from './ProviderSelect'
 
 function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => void }) {
@@ -134,6 +135,10 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
           AI Provider
         </Text>
         <ProviderSelect />
+        <Text h3 className="mt-5 mb-0">
+          Prompt Provider
+        </Text>
+        <PromptSelect />
         <Text h3 className="mt-8">
           Misc
         </Text>

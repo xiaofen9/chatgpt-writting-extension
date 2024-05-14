@@ -24,6 +24,7 @@ Or build from source by yourself.
 
 1. Clone the repo
 2. Install dependencies with `npm`
+3. `npm install`
 3. `npm run build`
 4. Load `build/chromium/` or `build/firefox/` directory to your browser
 
